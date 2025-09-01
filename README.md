@@ -6,7 +6,7 @@
 
 ## Todos
 - [✅] add page routing
-- [] main page
+- [✅] main page
 - [] crate a default layout
 - [] login page
 - [] register page

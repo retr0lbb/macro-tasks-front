@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { Button } from '@/components/ui/button'
 import { UiGrid } from '@/components/ui-grid'
+import { CopyFooter } from '@/components/copyright-footer'
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -33,7 +34,7 @@ function Index() {
       <div className='min-h-dvh '></div>
 
 
-      
+      <CopyFooter />
     </main>
   )
 }
