@@ -69,9 +69,9 @@ export function RegisterForm() {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Senha</FormLabel>
+              <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder="Senha" type="password" {...field} />
+                <Input placeholder="Password" type="password" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -79,7 +79,7 @@ export function RegisterForm() {
         />
 
         <Button variant="default" className="rounded-md">
-          Entrar
+          Sing Up Now
         </Button>
       </form>
     </Form>

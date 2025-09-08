@@ -32,9 +32,12 @@ function RouteComponent() {
             </CardTitle>
             <CardAction className="flex items-center justify-center gap-1 text-zinc-400">
               Não tem uma conta?{" "}
-              <span className="text-lg underline cursor-pointer hover:text-zinc-200">
+              <Link
+                to="/register"
+                className="text-lg underline cursor-pointer hover:text-zinc-200"
+              >
                 Cadastre-se
-              </span>
+              </Link>
             </CardAction>
           </CardHeader>
           <CardContent>

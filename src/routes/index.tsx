@@ -35,7 +35,7 @@ function Index() {
                 Sign-in
               </Button>
             </Link>
-            <Link to="/">
+            <Link to="/register">
               <Button variant="default" size="lg">
                 Sign-up now
               </Button>
