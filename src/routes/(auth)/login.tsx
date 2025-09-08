@@ -10,7 +10,8 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Chrome, Github, ArrowLeft } from "lucide-react";
+import { Chrome, Github } from "lucide-react";
+import { Logo } from "@/assets";
 
 export const Route = createFileRoute("/(auth)/login")({
   component: RouteComponent,
@@ -20,11 +21,16 @@ function RouteComponent() {
   return (
     <main className="min-h-dvh overflow-hidden grid grid-cols-5 place-items-center">
       <div className="w-full h-full p-5 col-span-2 bg-violet-700 relative">
-        <div className="absolute top-10 left-10 p-2 flex items-center justify-center text-zinc-300">
-          <Link to="/" className="flex items-center justify-center gap-2">
-            <ArrowLeft /> Voltar
-          </Link>
-        </div>
+        <Link
+          to="/"
+          className="flex items-center justify-center absolute top-4 left-4"
+        >
+          <img
+            src={Logo}
+            className="size-28"
+            alt="A lot of dots connected by a string"
+          />
+        </Link>
         <Card className="w-full h-full flex flex-col justify-center px-10">
           <CardHeader className="flex flex-col gap-2">
             <CardTitle>

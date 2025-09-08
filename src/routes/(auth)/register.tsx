@@ -3,6 +3,7 @@ import { RegisterForm } from "@/components/register-form";
 import { Button } from "@/components/ui/button";
 import { Chrome, Github } from "lucide-react";
 import { TextSeparator } from "@/components/ui/text-separator";
+import { Logo } from "@/assets/index";
 
 export const Route = createFileRoute("/(auth)/register")({
   component: RouteComponent,
@@ -11,7 +12,17 @@ export const Route = createFileRoute("/(auth)/register")({
 function RouteComponent() {
   return (
     <div className="w-full min-h-dvh grid grid-cols-5">
-      <div className="w-full h-full col-span-2 border-r flex justify-center items-center flex-col gap-2">
+      <div className="w-full h-full col-span-2 border-r flex justify-center items-center flex-col gap-2 relative">
+        <Link
+          to="/"
+          className="flex items-center justify-center absolute top-2 left-2"
+        >
+          <img
+            src={Logo}
+            className="size-28"
+            alt="A lot of dots connected by a string"
+          />
+        </Link>
         <div className="w-full px-20 py-2">
           <h1 className="text-zinc-100 text-5xl font-bold">Hello There!</h1>
           <p className="text-zinc-400">
