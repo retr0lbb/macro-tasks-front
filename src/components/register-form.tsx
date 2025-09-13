@@ -11,6 +11,7 @@ import { useForm } from "react-hook-form";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
 
 const registerSchema = z.object({
   userName: z.string().min(3),
@@ -31,6 +32,7 @@ export function RegisterForm() {
   function onSubmit(values: z.infer<typeof registerSchema>) {
     console.log(values);
     loginForm.reset();
+    toast.success("Account create with success.");
   }
 
   return (
