@@ -12,6 +12,8 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
+import { useRegister } from "@/hooks/useRegister";
+import { useNavigate } from "@tanstack/react-router";
 
 const registerSchema = z.object({
   userName: z.string().min(3),
@@ -28,11 +30,27 @@ export function RegisterForm() {
       password: "",
     },
   });
+  const navigator = useNavigate();
+  const { error, isPending, mutateAsync: register } = useRegister();
 
-  function onSubmit(values: z.infer<typeof registerSchema>) {
-    console.log(values);
-    loginForm.reset();
-    toast.success("Account create with success.");
+  async function onSubmit(values: z.infer<typeof registerSchema>) {
+    try {
+      const data = await register(values);
+      if (error) {
+        throw error;
+      }
+
+      toast.success(data?.message);
+      loginForm.reset();
+      navigator({ to: "/" });
+    } catch (error) {
+      console.log(error);
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "An unexpected error occurred.",
+      );
+    }
   }
 
   return (
@@ -80,7 +98,7 @@ export function RegisterForm() {
           )}
         />
 
-        <Button variant="default" className="rounded-md">
+        <Button disabled={isPending} variant="default" className="rounded-md">
           Sing Up Now
         </Button>
       </form>

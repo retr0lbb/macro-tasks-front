@@ -13,6 +13,7 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { useNavigate } from "@tanstack/react-router";
 import { useFetchLogin } from "@/hooks/useFetchLogin";
+import { toast } from "sonner";
 
 const loginFormSchema = z.object({
   email: z.email(),
@@ -21,14 +22,7 @@ const loginFormSchema = z.object({
 
 export function LoginForm() {
   const navigator = useNavigate();
-  const {
-    data,
-    isPending,
-    isSuccess,
-    isError,
-    error,
-    mutateAsync: login,
-  } = useFetchLogin();
+  const { isPending, error, mutateAsync: login } = useFetchLogin();
 
   const loginForm = useForm<z.infer<typeof loginFormSchema>>({
     resolver: zodResolver(loginFormSchema),
@@ -39,17 +33,21 @@ export function LoginForm() {
   });
 
   async function onSubmit(values: z.infer<typeof loginFormSchema>) {
-    await login(values);
-    if (isError || error) {
-      alert(error);
-    }
+    try {
+      const data = await login(values);
 
-    if (isSuccess) {
-      console.log("Ok it went that way");
-      console.log(data);
-      navigator({ to: "/" });
+      if (error) {
+        throw error;
+      }
+
+      toast.success(data.message);
+      loginForm.reset();
+      return navigator({ to: "/" });
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : "An unexpected Error occurred",
+      );
     }
-    loginForm.reset();
   }
 
   return (

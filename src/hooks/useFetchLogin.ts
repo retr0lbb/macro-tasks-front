@@ -6,16 +6,16 @@ interface LoginRequiredData{
     password: string
 }
 interface LoginResponseData{
+    message: string,
     token: string
 }
 
 export function useFetchLogin(){
-    const BASE_URL = import.meta.env.BASE_URL
 
     return useMutation({
         mutationKey: ["login"],
         mutationFn: async (data: LoginRequiredData) => {
-            const response = await fetch(`${BASE_URL}/auth/login`, {
+            const response = await fetch(`secret/auth/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
