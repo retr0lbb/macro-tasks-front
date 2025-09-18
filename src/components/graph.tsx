@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/noNonNullAssertion: <no need> */
 import ForceGraph2D from "react-force-graph-2d";
 import { graphData } from "@/lib/gen-data";
 
@@ -20,7 +21,6 @@ export function Graphs() {
           const size = 16 / globalScale;
           const label = node.id as string;
 
-          // Desenhar um círculo com borda
           ctx.beginPath();
           ctx.arc(node.x!, node.y!, size, 0, 2 * Math.PI);
           ctx.fillStyle = "#1e293b";
