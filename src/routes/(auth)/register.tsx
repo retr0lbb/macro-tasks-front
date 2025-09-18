@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Chrome, Github } from "lucide-react";
 import { TextSeparator } from "@/components/ui/text-separator";
 import { Logo } from "@/assets/index";
+import { UiDots } from "@/components/ui-dots";
 
 export const Route = createFileRoute("/(auth)/register")({
   component: RouteComponent,
@@ -12,7 +13,7 @@ export const Route = createFileRoute("/(auth)/register")({
 function RouteComponent() {
   return (
     <div className="w-full min-h-dvh grid grid-cols-5">
-      <div className="w-full h-full col-span-2 border-r flex justify-center items-center flex-col gap-2 relative">
+      <div className="w-full h-full col-span-2 border-r flex justify-center items-center flex-col gap-2 relative bg-zinc-900">
         <Link
           to="/"
           className="flex items-center justify-center absolute top-2 left-2"
@@ -58,7 +59,7 @@ function RouteComponent() {
           </Link>
         </span>
       </div>
-      <div className="w-full h-full bg-zinc-900 col-span-3" />
+      <UiDots className="bg-zinc-950" color="255,255,255,0.1" />
     </div>
   );
 }

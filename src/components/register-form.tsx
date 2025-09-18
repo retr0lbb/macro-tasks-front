@@ -31,12 +31,12 @@ export function RegisterForm() {
     },
   });
   const navigator = useNavigate();
-  const { error, isPending, mutateAsync: register } = useRegister();
+  const { isError, error, isPending, mutateAsync: register } = useRegister();
 
   async function onSubmit(values: z.infer<typeof registerSchema>) {
     try {
       const data = await register(values);
-      if (error) {
+      if (isError) {
         throw error;
       }
 
