@@ -1,5 +1,11 @@
-import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  Outlet,
+  redirect,
+  useNavigate,
+} from "@tanstack/react-router";
 import { SideBarMenu } from "@/components/sidebar-menu";
+import { useLogout } from "@/hooks/useLogout";
 
 export const Route = createFileRoute("/dashboard")({
   component: RouteComponent,
@@ -15,9 +21,20 @@ export const Route = createFileRoute("/dashboard")({
 });
 
 function RouteComponent() {
+  const { mutateAsync: logout } = useLogout();
+  const navigator = useNavigate();
+
+  async function handleLogout() {
+    console.log("func call");
+    const result = await logout();
+    console.log(result);
+
+    navigator({ to: "/", replace: true });
+  }
+
   return (
     <div className="w-full min-h-dvh bg-zinc-950 flex">
-      <SideBarMenu />
+      <SideBarMenu useLogout={handleLogout} />
       <Outlet />
     </div>
   );

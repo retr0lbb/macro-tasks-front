@@ -1,4 +1,4 @@
-import { setToken } from "@/lib/setToken"
+import { setToken } from "@/lib/token"
 import { useMutation } from "@tanstack/react-query"
 import {api} from "@/lib/api"
 import type { AxiosResponse } from "axios"

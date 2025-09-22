@@ -1,12 +1,22 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { UiGrid } from "@/components/ui-grid";
 import { CopyFooter } from "@/components/copyright-footer";
 import { Graphs } from "@/components/graph";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { CircleDashed } from "lucide-react";
+import { getToken } from "@/lib/token";
 
 export const Route = createFileRoute("/")({
+  beforeLoad: () => {
+    const token = getToken();
+
+    if (token) {
+      throw redirect({
+        to: "/dashboard",
+      });
+    }
+  },
   component: Index,
 });
 

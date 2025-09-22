@@ -24,7 +24,7 @@ const loginFormSchema = z.object({
 
 export function LoginForm() {
   const navigator = useNavigate();
-  const { isPending, error, mutateAsync: login } = useFetchLogin();
+  const { isPending, mutateAsync: login } = useFetchLogin();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const loginForm = useForm<z.infer<typeof loginFormSchema>>({
@@ -36,24 +36,22 @@ export function LoginForm() {
   });
 
   async function onSubmit(values: z.infer<typeof loginFormSchema>) {
-    try {
-      setIsModalOpen(true);
-      const data = await login(values);
+    setIsModalOpen(true);
 
-      if (error) {
-        throw error;
-      }
-
-      toast.success(data.message);
-      loginForm.reset();
-      return navigator({ to: "/dashboard" });
-    } catch (error) {
-      toast.error(
-        error instanceof Error ? error.message : "An unexpected Error occurred",
-      );
-    } finally {
-      setIsModalOpen(false);
-    }
+    toast.promise(login({ ...values }), {
+      loading: "Creating your account ...",
+      success: (data) => {
+        loginForm.reset();
+        navigator({ to: "/dashboard" });
+        setIsModalOpen(false);
+        return data.message || "Account created with success!";
+      },
+      error: (err) => {
+        setIsModalOpen(false);
+        console.log(err);
+        return "An un expected Error Occurred";
+      },
+    });
   }
 
   return (
