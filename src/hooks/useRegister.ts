@@ -30,6 +30,12 @@ export function useRegister(){
             }
             
             return result.data
-        }
+        },
+
+        onSuccess: async (data, variables, context) =>  {
+            console.log(data)
+
+            //todo later
+        },
     })
 }

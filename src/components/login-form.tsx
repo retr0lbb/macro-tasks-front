@@ -46,7 +46,7 @@ export function LoginForm() {
 
       toast.success(data.message);
       loginForm.reset();
-      return navigator({ to: "/" });
+      return navigator({ to: "/dashboard" });
     } catch (error) {
       toast.error(
         error instanceof Error ? error.message : "An unexpected Error occurred",
