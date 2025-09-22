@@ -13,7 +13,7 @@ import { Separator } from "@/components/ui/separator";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Chrome, Github } from "lucide-react";
 import { Logo } from "@/assets";
-
+import { Graphs } from "@/components/graph";
 export const Route = createFileRoute("/(auth)/login")({
   component: RouteComponent,
 });
@@ -21,7 +21,7 @@ export const Route = createFileRoute("/(auth)/login")({
 function RouteComponent() {
   return (
     <main className="min-h-dvh overflow-hidden grid grid-cols-5 place-items-center">
-      <div className="w-full h-full p-5 col-span-2 bg-violet-700 relative">
+      <div className="w-full h-full p-5 col-span-2 bg-zinc-950 relative">
         <Link
           to="/"
           className="flex items-center justify-center absolute top-4 left-4"
@@ -46,12 +46,12 @@ function RouteComponent() {
             </CardDescription>
 
             <CardAction className="flex items-center justify-center gap-1 text-zinc-400">
-              Não tem uma conta?{" "}
+              Don't have an account?{" "}
               <Link
                 to="/register"
                 className="text-lg underline cursor-pointer hover:text-zinc-200"
               >
-                Cadastre-se
+                Sing-up
               </Link>
             </CardAction>
           </CardHeader>
@@ -61,16 +61,18 @@ function RouteComponent() {
           </CardContent>
           <CardFooter className="flex gap-2 items-center">
             <Button variant={"outline"}>
-              <Chrome /> Login com Google
+              <Chrome /> sign-in with Google
             </Button>
             <Separator orientation="vertical" />
             <Button variant={"outline"}>
-              <Github /> Login com Github
+              <Github /> sign-in with Github
             </Button>
           </CardFooter>
         </Card>
       </div>
-      <div className="bg-violet-700 w-full h-full col-span-3"></div>
+      <div className="bg-zinc-950 w-full h-full col-span-3 flex items-center justify-center">
+        <Graphs />
+      </div>
     </main>
   );
 }
