@@ -21,21 +21,13 @@ export function useRegister(){
     return useMutation({
         mutationKey: ["register"],
         mutationFn: async (data: RegisterFormData) => {
-            const response = await api.post(`/auth/register`, data )
-
-            const result: AxiosResponse<RegisterResponseData> = await response.data
+            const response: AxiosResponse<RegisterResponseData> = await api.post(`/auth/register`, data )
 
             if(response.status !== 201 && response.status !== 200){
-                throw new Error(result.data.message || "RequestError");
+                throw new Error(response.data.message || "RequestError");
             }
             
-            return result.data
-        },
-
-        onSuccess: async (data, variables, context) =>  {
-            console.log(data)
-
-            //todo later
+            return response.data
         },
     })
 }

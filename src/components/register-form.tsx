@@ -33,30 +33,26 @@ export function RegisterForm() {
     },
   });
   const navigator = useNavigate();
-  const { isError, error, isPending, mutateAsync: register } = useRegister();
+  const { isPending, mutateAsync: register } = useRegister();
   const [isModalOpen, setModalOpen] = useState(false);
 
   async function onSubmit(values: z.infer<typeof registerSchema>) {
     setModalOpen(true);
-    try {
-      const data = await register(values);
-      if (isError) {
-        throw error;
-      }
 
-      toast.success(data.message);
-      loginForm.reset();
-      navigator({ to: "/" });
-    } catch (error) {
-      console.log(error);
-      toast.error(
-        error instanceof Error
-          ? error.message
-          : "An unexpected error occurred.",
-      );
-    } finally {
-      setModalOpen(false);
-    }
+    toast.promise(register({ ...values }), {
+      loading: "Creating your account ...",
+      success: (data) => {
+        loginForm.reset();
+        navigator({ to: "/" });
+        setModalOpen(false);
+        return data.message || "Account created with success!";
+      },
+      error: (err) => {
+        setModalOpen(false);
+        console.log(err);
+        return "An un expected Error Occured";
+      },
+    });
   }
 
   return (
