@@ -51,6 +51,8 @@ export function LoginForm() {
       toast.error(
         error instanceof Error ? error.message : "An unexpected Error occurred",
       );
+    } finally {
+      setIsModalOpen(false);
     }
   }
 
@@ -97,7 +99,12 @@ export function LoginForm() {
         </form>
       </Form>
 
-      <SlowStartDialog isOpen={isModalOpen} />
+      <SlowStartDialog
+        setIsOpen={() => {
+          setIsModalOpen(false);
+        }}
+        isOpen={isModalOpen}
+      />
     </>
   );
 }

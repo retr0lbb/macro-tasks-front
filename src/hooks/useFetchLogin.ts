@@ -1,4 +1,7 @@
+import { setToken } from "@/lib/setToken"
 import { useMutation } from "@tanstack/react-query"
+import {api} from "@/lib/api"
+import type { AxiosResponse } from "axios"
 
 
 interface LoginRequiredData{
@@ -19,21 +22,16 @@ export function useFetchLogin(){
             if(!BACKEND_URL){
                 throw new Error("Backend Url missing")
             }
-            const response = await fetch(`${BACKEND_URL}/auth/login`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data)
-            })
 
-            const result: LoginResponseData = await response.json()
-            
-            if(!response.ok){
-                throw new Error(result?.message || "An unexpected error occurred")
+            const response: AxiosResponse<LoginResponseData> = await api.post(`/auth/login`, data)
+
+            if(response.status !== 200){
+                throw new Error(response.data.message || "Unknown error")
             }
 
-            return result
+            setToken(response.data.token)
+
+            return response.data
         }
     })
 }

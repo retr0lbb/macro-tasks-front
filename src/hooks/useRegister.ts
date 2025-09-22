@@ -1,4 +1,6 @@
+import { api } from "@/lib/api"
 import { useMutation } from "@tanstack/react-query"
+import type { AxiosResponse } from "axios"
 
 interface RegisterFormData {
     userName: string
@@ -19,23 +21,12 @@ export function useRegister(){
     return useMutation({
         mutationKey: ["register"],
         mutationFn: async (data: RegisterFormData) => {
-            const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
+            const response = await api.post(`/auth/register`, data )
 
-            if(!BACKEND_URL){
-                throw new Error("Could'nt read Env")
-            }
-            const response = await fetch(`${BACKEND_URL}/auth/register`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data)
-            })
+            const result: AxiosResponse<RegisterResponseData> = await response.data
 
-            const result: RegisterResponseData = await response.json()
-
-            if(!response.ok){
-                throw new Error(result?.message || "Erro na requisição");
+            if(response.status !== 201 && response.status !== 200){
+                throw new Error(result.data.message || "RequestError");
             }
             
             return result

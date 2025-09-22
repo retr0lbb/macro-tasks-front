@@ -19,7 +19,7 @@ function RouteComponent() {
 
   return (
     <div className="">
-      {data.map((project) => (
+      {data.data.map((project) => (
         <ProjectCard key={project.id}>
           <ProjectCard.Header
             numberOfTasks={project._count.tasks}
