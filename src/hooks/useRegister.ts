@@ -29,7 +29,7 @@ export function useRegister(){
                 throw new Error(result.data.message || "RequestError");
             }
             
-            return result
+            return result.data
         }
     })
 }

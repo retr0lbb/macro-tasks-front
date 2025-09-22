@@ -14,6 +14,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { useRegister } from "@/hooks/useRegister";
 import { useNavigate } from "@tanstack/react-router";
+import { useState } from "react";
+import { SlowStartDialog } from "./slow-start-dialog";
 
 const registerSchema = z.object({
   userName: z.string().min(3),
@@ -32,15 +34,17 @@ export function RegisterForm() {
   });
   const navigator = useNavigate();
   const { isError, error, isPending, mutateAsync: register } = useRegister();
+  const [isModalOpen, setModalOpen] = useState(false);
 
   async function onSubmit(values: z.infer<typeof registerSchema>) {
+    setModalOpen(true);
     try {
       const data = await register(values);
       if (isError) {
         throw error;
       }
 
-      toast.success(data?.message);
+      toast.success(data.message);
       loginForm.reset();
       navigator({ to: "/" });
     } catch (error) {
@@ -50,58 +54,69 @@ export function RegisterForm() {
           ? error.message
           : "An unexpected error occurred.",
       );
+    } finally {
+      setModalOpen(false);
     }
   }
 
   return (
-    <Form {...loginForm}>
-      <form onSubmit={loginForm.handleSubmit(onSubmit)} className="space-y-4">
-        <FormField
-          control={loginForm.control}
-          name="userName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Username</FormLabel>
-              <FormControl>
-                <Input type="text" placeholder="Username" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+    <>
+      <Form {...loginForm}>
+        <form onSubmit={loginForm.handleSubmit(onSubmit)} className="space-y-4">
+          <FormField
+            control={loginForm.control}
+            name="userName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Username</FormLabel>
+                <FormControl>
+                  <Input type="text" placeholder="Username" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={loginForm.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input type="email" placeholder="Email" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={loginForm.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input type="email" placeholder="Email" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={loginForm.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Password</FormLabel>
-              <FormControl>
-                <Input placeholder="Password" type="password" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={loginForm.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Password</FormLabel>
+                <FormControl>
+                  <Input placeholder="Password" type="password" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <Button disabled={isPending} variant="default" className="rounded-md">
-          Sing Up Now
-        </Button>
-      </form>
-    </Form>
+          <Button disabled={isPending} variant="default" className="rounded-md">
+            Sing Up Now
+          </Button>
+        </form>
+      </Form>
+
+      <SlowStartDialog
+        isOpen={isModalOpen}
+        setIsOpen={() => {
+          setModalOpen(false);
+        }}
+      />
+    </>
   );
 }
