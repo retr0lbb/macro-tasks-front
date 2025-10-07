@@ -43,7 +43,7 @@ export function RegisterForm() {
       loading: "Creating your account ...",
       success: (data) => {
         loginForm.reset();
-        navigator({ to: "/" });
+        navigator({ to: "/dashboard" });
         setModalOpen(false);
         return data.message || "Account created with success!";
       },

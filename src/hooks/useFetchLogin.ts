@@ -8,7 +8,7 @@ interface LoginRequiredData{
     email: string,
     password: string
 }
-interface LoginResponseData{
+export interface LoginResponseData{
     message: string,
     token: string
 }

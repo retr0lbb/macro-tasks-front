@@ -1,6 +1,8 @@
 import { api } from "@/lib/api"
+import { setToken } from "@/lib/token"
 import { useMutation } from "@tanstack/react-query"
 import type { AxiosResponse } from "axios"
+import type { LoginResponseData } from "./useFetchLogin"
 
 interface RegisterFormData {
     userName: string
@@ -28,6 +30,22 @@ export function useRegister(){
             }
             
             return response.data
+        },
+        onSuccess: async (_, variables) => {
+            try {
+                const loginResponse: AxiosResponse<LoginResponseData> = await api.post("/auth/login", {
+                    email: variables.email,
+                    password: variables.password
+                })
+
+                if(loginResponse.status !== 200){
+                    throw new Error("Something went wrong")
+                }
+
+                setToken(loginResponse.data.token)
+            } catch (error: any) {
+                console.error(error.message || "An un expected Error occurred")
+            }
         },
     })
 }
