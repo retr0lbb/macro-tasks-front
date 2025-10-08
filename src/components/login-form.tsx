@@ -39,12 +39,12 @@ export function LoginForm() {
     setIsModalOpen(true);
 
     toast.promise(login({ ...values }), {
-      loading: "Creating your account ...",
+      loading: "Logging your account ...",
       success: (data) => {
         loginForm.reset();
         navigator({ to: "/dashboard" });
         setIsModalOpen(false);
-        return data.message || "Account created with success!";
+        return data.message || "Account Logged with success!";
       },
       error: (err) => {
         setIsModalOpen(false);

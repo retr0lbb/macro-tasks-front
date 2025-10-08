@@ -6,13 +6,12 @@ import {
 } from "@tanstack/react-router";
 import { SideBarMenu } from "@/components/sidebar-menu";
 import { useLogout } from "@/hooks/useLogout";
+import { getToken } from "@/lib/token";
 
 export const Route = createFileRoute("/dashboard")({
   component: RouteComponent,
   beforeLoad: () => {
-    const token = sessionStorage.getItem("@HYPERBOLIC_TASKS:access_token");
-
-    if (!token) {
+    if (!getToken()) {
       throw redirect({
         to: "/login",
       });

@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noExplicitAny: <no need> */
 import { api } from "@/lib/api"
 import { setToken } from "@/lib/token"
 import { useMutation } from "@tanstack/react-query"
@@ -9,6 +10,7 @@ interface RegisterFormData {
     email: string
     password: string
 }
+
 interface RegisterResponseData {
     message: string
     createdUser: {
@@ -33,16 +35,22 @@ export function useRegister(){
         },
         onSuccess: async (_, variables) => {
             try {
-                const loginResponse: AxiosResponse<LoginResponseData> = await api.post("/auth/login", {
+                const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
+                if(!BACKEND_URL){
+                    throw new Error("Backend Url missing")
+                }
+
+                const response: AxiosResponse<LoginResponseData> = await api.post(`/auth/login`, {
                     email: variables.email,
                     password: variables.password
                 })
 
-                if(loginResponse.status !== 200){
-                    throw new Error("Something went wrong")
+                if(response.status !== 200){
+                    throw new Error(response.data.message || "Unknown error")
                 }
 
-                setToken(loginResponse.data.token)
+                setToken(response.data.csrfToken)         
+
             } catch (error: any) {
                 console.error(error.message || "An un expected Error occurred")
             }

@@ -10,7 +10,7 @@ interface LoginRequiredData{
 }
 export interface LoginResponseData{
     message: string,
-    token: string
+    csrfToken: string
 }
 
 export function useFetchLogin(){
@@ -29,7 +29,7 @@ export function useFetchLogin(){
                 throw new Error(response.data.message || "Unknown error")
             }
 
-            setToken(response.data.token)
+            setToken(response.data.csrfToken)
 
             return response.data
         }
