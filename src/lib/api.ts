@@ -5,7 +5,7 @@ const baseURl = (import.meta.env.VITE_BACKEND_URL);
 if(!baseURl){
     throw new Error("Base URL not found")
 }
-const api = axios.create({baseURL: baseURl })
+const api = axios.create({baseURL: baseURl, withCredentials: true })
 
 api.interceptors.request.use((config) => {
     const token = sessionStorage.getItem("@HYPERBOLIC_TASKS:access_token")

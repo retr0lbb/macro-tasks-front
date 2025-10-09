@@ -8,7 +8,7 @@ export function getToken(): string{
     const token = sessionStorage.getItem("@HYPERBOLIC_TASKS:csrf_token")
 
     if(!token){
-        return ""
+        throw new Error("Token not found")
     }
 
     return token
