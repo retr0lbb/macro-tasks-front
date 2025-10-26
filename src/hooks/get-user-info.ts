@@ -29,6 +29,8 @@ export function useGetUserInfo(){
             }
 
             return response.data
-        }
+        },
+        staleTime: 1000 * 60 * 5,
+        refetchOnWindowFocus: false,
     })
 }

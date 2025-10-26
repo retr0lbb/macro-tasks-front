@@ -16,7 +16,7 @@ export function useGetProjects() {
     queryKey: ["get-projects"],
     queryFn: async () => {
 
-      const response = await api(`/project`);
+      const response = await api.get(`/project`);
 
       if (response.status !== 200) {
         throw new Error(response.data.message || `Request failed: ${response.status}`);
@@ -24,7 +24,9 @@ export function useGetProjects() {
 
       const data: AxiosResponse<GetProjectResponse> = response.data
       
-      return data.data;
+      return data.data.data;
     },
+    staleTime: 1000 * 60 * 5,
+    refetchOnWindowFocus: false,
   });
 }

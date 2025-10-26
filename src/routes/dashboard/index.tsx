@@ -1,3 +1,4 @@
+import { ProjectWrapper } from "@/components/projects-wrapper";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/dashboard/")({
@@ -5,5 +6,9 @@ export const Route = createFileRoute("/dashboard/")({
 });
 
 function RouteComponent() {
-  return <div>Hello "/dashboard/"!</div>;
+  return (
+    <div>
+      <ProjectWrapper />
+    </div>
+  );
 }
