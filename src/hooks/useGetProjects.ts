@@ -24,7 +24,7 @@ export function useGetProjects() {
 
       const data: AxiosResponse<GetProjectResponse> = response.data
       
-      return data.data.data;
+      return data.data;
     },
     staleTime: 1000 * 60 * 5,
     refetchOnWindowFocus: false,

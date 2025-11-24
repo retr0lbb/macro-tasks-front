@@ -14,7 +14,7 @@ interface UserCardProps {
 }
 
 export function UserCard(props: UserCardProps) {
-  const { data, isPending, error } = useGetUserInfo();
+  const { data, isPending } = useGetUserInfo();
 
   if (isPending) {
     return " ...";

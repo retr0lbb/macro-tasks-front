@@ -25,7 +25,7 @@ api.interceptors.response.use(
       console.warn("Token expirado, tentando refresh...")
 
       try {
-        const refreshResponse = await api.get("/auth/refresh", {
+        await api.get("/auth/refresh", {
           headers: {
             "X-CSRF-TOKEN": getToken(),
           },
